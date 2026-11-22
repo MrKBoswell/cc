@@ -1,0 +1,372 @@
+/* ==================== BASE MODE VARIABLES (DARK / LIGHT) ==================== */
+:root {
+  --bg-main: #0f141c;
+  --bg-panel: #161d27;
+  --bg-card: #1c2431;
+  --bg-card-hover: #232d3d;
+  --bg-input: #11161f;
+  --border-color: #2a3444;
+  --border-highlight: #3b4b63;
+  --text-main: #e6edf3;
+  --text-muted: #8b98a9;
+  --accent-cyan: #2dd4bf;
+  --accent-blue: #38bdf8;
+  --accent-amber: #f59e0b;
+  --accent-purple: #a78bfa;
+  --accent-green: #22c55e;
+  --accent-red: #ef4444;
+  --code-bg: #0b0f15;
+  --canvas-bg: #0b1018;
+  --card-radius: 12px;
+  --card-border-w: 1px;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+[data-mode="light"] {
+  --bg-main: #f1f5f9;
+  --bg-panel: #ffffff;
+  --bg-card: #f8fafc;
+  --bg-card-hover: #eef2f6;
+  --bg-input: #ffffff;
+  --border-color: #cbd5e1;
+  --border-highlight: #94a3b8;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --accent-cyan: #0d9488;
+  --accent-blue: #0284c7;
+  --accent-amber: #d97706;
+  --accent-purple: #7c3aed;
+  --accent-green: #16a34a;
+  --accent-red: #dc2626;
+  --code-bg: #1e293b;
+  --canvas-bg: #0f172a;
+  --shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+/* ==================== THEME 1: ARCADE (DEFAULT) ==================== */
+[data-palette="arcade"] {
+  --card-radius: 12px;
+  --card-border-w: 1px;
+}
+
+/* ==================== THEME 2: CHALKBOARD (WARM CLASSROOM & AMBER) ==================== */
+[data-palette="chalkboard"] {
+  --bg-main: #13221c;
+  --bg-panel: #1a2e26;
+  --bg-card: #213a30;
+  --bg-card-hover: #29473b;
+  --bg-input: #0e1915;
+  --border-color: #36594a;
+  --border-highlight: #52826d;
+  --text-main: #f7f4eb;
+  --text-muted: #b7c9be;
+  --accent-cyan: #fbbf24;
+  --accent-blue: #34d399;
+  --accent-amber: #fb923c;
+  --accent-green: #4ade80;
+  --code-bg: #0c1713;
+  --canvas-bg: #0e1b16;
+  --card-radius: 6px;
+  --card-border-w: 2px;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+[data-mode="light"][data-palette="chalkboard"] {
+  --bg-main: #f5efe2;
+  --bg-panel: #fffdf8;
+  --bg-card: #faf3e3;
+  --bg-card-hover: #f2e7cf;
+  --bg-input: #ffffff;
+  --border-color: #d6c7a9;
+  --border-highlight: #b59f76;
+  --text-main: #1f2923;
+  --text-muted: #57635b;
+  --accent-cyan: #b45309;
+  --accent-blue: #047857;
+  --accent-amber: #c2410c;
+}
+
+/* ==================== THEME 3: BLUEPRINT (TECHNICAL GRID & COBALT) ==================== */
+[data-palette="blueprint"] {
+  --bg-main: #09192f;
+  --bg-panel: #0e2444;
+  --bg-card: #122e57;
+  --bg-card-hover: #173a6d;
+  --bg-input: #071324;
+  --border-color: #1f4b87;
+  --border-highlight: #3b82f6;
+  --text-main: #eff6ff;
+  --text-muted: #93c5fd;
+  --accent-cyan: #60a5fa;
+  --accent-blue: #22d3ee;
+  --accent-amber: #facc15;
+  --accent-green: #34d399;
+  --code-bg: #061020;
+  --canvas-bg: #07152b;
+  --card-radius: 2px;
+  --card-border-w: 1.5px;
+}
+
+[data-mode="light"][data-palette="blueprint"] {
+  --bg-main: #e8f1fc;
+  --bg-panel: #f8fbff;
+  --bg-card: #eef5fe;
+  --bg-card-hover: #dceafa;
+  --bg-input: #ffffff;
+  --border-color: #93c5fd;
+  --border-highlight: #2563eb;
+  --text-main: #0c2340;
+  --text-muted: #3b5b84;
+  --accent-cyan: #1d4ed8;
+  --accent-blue: #0369a1;
+  --accent-amber: #b45309;
+}
+
+/* ==================== THEME 4: CYBERPUNK (NEON SYNTH & MAGENTA) ==================== */
+[data-palette="cyberpunk"] {
+  --bg-main: #0b0616;
+  --bg-panel: #140b26;
+  --bg-card: #1d1038;
+  --bg-card-hover: #29164f;
+  --bg-input: #090512;
+  --border-color: #4c1d95;
+  --border-highlight: #d946ef;
+  --text-main: #fdf4ff;
+  --text-muted: #d8b4fe;
+  --accent-cyan: #f472b6;
+  --accent-blue: #22d3ee;
+  --accent-amber: #facc15;
+  --accent-green: #4ade80;
+  --code-bg: #07040f;
+  --canvas-bg: #080412;
+  --card-radius: 8px;
+  --card-border-w: 1.5px;
+}
+[data-mode="light"][data-palette="cyberpunk"] {
+  --bg-main: #fdf4ff;
+  --bg-panel: #ffffff;
+  --bg-card: #fae8ff;
+  --bg-card-hover: #f5d0fe;
+  --bg-input: #ffffff;
+  --border-color: #e879f9;
+  --border-highlight: #a21caf;
+  --text-main: #3b0764;
+  --text-muted: #701a75;
+  --accent-cyan: #c026d3;
+  --accent-blue: #0284c7;
+  --accent-amber: #d97706;
+}
+
+/* ==================== THEME 5: FOREST (MOSS & EMERALD) ==================== */
+[data-palette="forest"] {
+  --bg-main: #0a1710;
+  --bg-panel: #102419;
+  --bg-card: #163223;
+  --bg-card-hover: #1d422e;
+  --bg-input: #08120c;
+  --border-color: #27543c;
+  --border-highlight: #34d399;
+  --text-main: #ecfdf5;
+  --text-muted: #a7f3d0;
+  --accent-cyan: #34d399;
+  --accent-blue: #a3e635;
+  --accent-amber: #fbbf24;
+  --accent-green: #4ade80;
+  --code-bg: #07100b;
+  --canvas-bg: #07120c;
+  --card-radius: 14px;
+  --card-border-w: 1px;
+}
+[data-mode="light"][data-palette="forest"] {
+  --bg-main: #ecfdf5;
+  --bg-panel: #ffffff;
+  --bg-card: #d1fae5;
+  --bg-card-hover: #a7f3d0;
+  --bg-input: #ffffff;
+  --border-color: #6ee7b7;
+  --border-highlight: #059669;
+  --text-main: #064e3b;
+  --text-muted: #047857;
+  --accent-cyan: #059669;
+  --accent-blue: #65a30d;
+  --accent-amber: #d97706;
+}
+
+/* ==================== THEME 6: SUNSET (CRIMSON & WARM GOLD) ==================== */
+[data-palette="sunset"] {
+  --bg-main: #1a0d12;
+  --bg-panel: #27131b;
+  --bg-card: #361a25;
+  --bg-card-hover: #472230;
+  --bg-input: #14090d;
+  --border-color: #6b2d42;
+  --border-highlight: #fb7185;
+  --text-main: #fff1f2;
+  --text-muted: #fecdd3;
+  --accent-cyan: #fb923c;
+  --accent-blue: #fb7185;
+  --accent-amber: #facc15;
+  --accent-green: #4ade80;
+  --code-bg: #12080c;
+  --canvas-bg: #14090e;
+  --card-radius: 14px;
+  --card-border-w: 1px;
+}
+[data-mode="light"][data-palette="sunset"] {
+  --bg-main: #fff1f2;
+  --bg-panel: #ffffff;
+  --bg-card: #ffe4e6;
+  --bg-card-hover: #fecdd3;
+  --bg-input: #ffffff;
+  --border-color: #fda4af;
+  --border-highlight: #e11d48;
+  --text-main: #4c0519;
+  --text-muted: #9f1239;
+  --accent-cyan: #ea580c;
+  --accent-blue: #e11d48;
+  --accent-amber: #ca8a04;
+}
+
+/* ==================== THEME 7: DRACULA (VAMPIRE VIOLET) ==================== */
+[data-palette="dracula"] {
+  --bg-main: #1e1f29;
+  --bg-panel: #282a36;
+  --bg-card: #343746;
+  --bg-card-hover: #414558;
+  --bg-input: #191a21;
+  --border-color: #44475a;
+  --border-highlight: #bd93f9;
+  --text-main: #f8f8f2;
+  --text-muted: #bfbfbf;
+  --accent-cyan: #8be9fd;
+  --accent-blue: #bd93f9;
+  --accent-amber: #ffb86c;
+  --accent-green: #50fa7b;
+  --code-bg: #191a21;
+  --canvas-bg: #191a21;
+  --card-radius: 10px;
+  --card-border-w: 1px;
+}
+[data-mode="light"][data-palette="dracula"] {
+  --bg-main: #f5f3ff;
+  --bg-panel: #ffffff;
+  --bg-card: #ede9fe;
+  --bg-card-hover: #ddd6fe;
+  --bg-input: #ffffff;
+  --border-color: #c4b5fd;
+  --border-highlight: #7c3aed;
+  --text-main: #2e1065;
+  --text-muted: #5b21b6;
+  --accent-cyan: #0891b2;
+  --accent-blue: #7c3aed;
+  --accent-amber: #ea580c;
+}
+
+/* ==================== THEME 8: MATRIX (HACKER PHOSPHOR GREEN) ==================== */
+[data-palette="matrix"] {
+  --bg-main: #030a04;
+  --bg-panel: #071409;
+  --bg-card: #0b1f0e;
+  --bg-card-hover: #112e15;
+  --bg-input: #020803;
+  --border-color: #166534;
+  --border-highlight: #22c55e;
+  --text-main: #dcfce7;
+  --text-muted: #86efac;
+  --accent-cyan: #4ade80;
+  --accent-blue: #22c55e;
+  --accent-amber: #a3e635;
+  --accent-green: #4ade80;
+  --code-bg: #020703;
+  --canvas-bg: #030904;
+  --card-radius: 4px;
+  --card-border-w: 1px;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+[data-mode="light"][data-palette="matrix"] {
+  --bg-main: #f0fdf4;
+  --bg-panel: #ffffff;
+  --bg-card: #dcfce7;
+  --bg-card-hover: #bbf7d0;
+  --bg-input: #ffffff;
+  --border-color: #4ade80;
+  --border-highlight: #15803d;
+  --text-main: #052e16;
+  --text-muted: #166534;
+  --accent-cyan: #15803d;
+  --accent-blue: #16a34a;
+  --accent-amber: #4d7c0f;
+}
+
+/* ==================== THEME 9: OCEAN (DEEP ABYSS & CORAL) ==================== */
+[data-palette="ocean"] {
+  --bg-main: #061826;
+  --bg-panel: #0b2538;
+  --bg-card: #10334d;
+  --bg-card-hover: #164363;
+  --bg-input: #04111c;
+  --border-color: #1d567e;
+  --border-highlight: #38bdf8;
+  --text-main: #f0f9ff;
+  --text-muted: #bae6fd;
+  --accent-cyan: #38bdf8;
+  --accent-blue: #2dd4bf;
+  --accent-amber: #fb7185;
+  --accent-green: #34d399;
+  --code-bg: #04101a;
+  --canvas-bg: #05131f;
+  --card-radius: 14px;
+  --card-border-w: 1px;
+}
+[data-mode="light"][data-palette="ocean"] {
+  --bg-main: #f0f9ff;
+  --bg-panel: #ffffff;
+  --bg-card: #e0f2fe;
+  --bg-card-hover: #bae6fd;
+  --bg-input: #ffffff;
+  --border-color: #7dd3fc;
+  --border-highlight: #0284c7;
+  --text-main: #082f49;
+  --text-muted: #0369a1;
+  --accent-cyan: #0284c7;
+  --accent-blue: #0d9488;
+  --accent-amber: #e11d48;
+}
+
+/* ==================== THEME 10: RETRO (8-BIT CREAM & PIXEL) ==================== */
+[data-palette="retro"] {
+  --bg-main: #1c1917;
+  --bg-panel: #292524;
+  --bg-card: #36302e;
+  --bg-card-hover: #443d3a;
+  --bg-input: #171412;
+  --border-color: #57534e;
+  --border-highlight: #f59e0b;
+  --text-main: #fafaf9;
+  --text-muted: #d6d3d1;
+  --accent-cyan: #fbbf24;
+  --accent-blue: #f87171;
+  --accent-amber: #38bdf8;
+  --accent-green: #4ade80;
+  --code-bg: #141210;
+  --canvas-bg: #171412;
+  --card-radius: 0px;
+  --card-border-w: 2px;
+}
+[data-mode="light"][data-palette="retro"] {
+  --bg-main: #f5f0e6;
+  --bg-panel: #fffdf9;
+  --bg-card: #efe8d8;
+  --bg-card-hover: #e5dcc6;
+  --bg-input: #ffffff;
+  --border-color: #a8a29e;
+  --border-highlight: #b45309;
+  --text-main: #1c1917;
+  --text-muted: #57534e;
+  --accent-cyan: #b45309;
+  --accent-blue: #dc2626;
+  --accent-amber: #0369a1;
+}
+

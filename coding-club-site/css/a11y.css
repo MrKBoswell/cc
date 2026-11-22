@@ -1,0 +1,37 @@
+/* ==================== ACCESSIBILITY MODES ==================== */
+html.a11y-invert {
+  filter: invert(1) hue-rotate(180deg);
+}
+html.a11y-invert canvas,
+html.a11y-invert img {
+  filter: invert(1) hue-rotate(180deg);
+}
+html.a11y-large-text {
+  font-size: 118%;
+}
+html.a11y-dyslexic body,
+html.a11y-dyslexic button,
+html.a11y-dyslexic input,
+html.a11y-dyslexic select {
+  font-family: 'Comic Sans MS', 'Trebuchet MS', Verdana, sans-serif !important;
+  letter-spacing: 0.04em;
+  word-spacing: 0.12em;
+  line-height: 1.65;
+}
+html.a11y-high-contrast {
+  --border-color: #ffffff !important;
+  --border-highlight: #facc15 !important;
+  --text-main: #ffffff !important;
+  --text-muted: #fde047 !important;
+  --bg-main: #000000 !important;
+  --bg-panel: #0a0a0a !important;
+  --bg-card: #121212 !important;
+  --card-border-w: 2px !important;
+}
+html.a11y-focus-rings *:focus-visible,
+html.a11y-focus-rings button:hover,
+html.a11y-focus-rings .tool-card:hover {
+  outline: 3px solid var(--accent-amber) !important;
+  outline-offset: 2px !important;
+}
+

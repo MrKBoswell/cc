@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark" data-palette="arcade">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TBA Coding Club — Python &amp; Pygame Visual Lab</title>
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/a11y.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/tools.css" />
+  <link rel="stylesheet" href="css/games.css" />
+  <link rel="stylesheet" href="css/showcase.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="nav-left">
+      <div class="brand" onclick="navigateTo('home')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('home');}">
+        <div class="brand-badge" aria-hidden="true">&gt;&gt;&gt; TBA<span class="brand-cursor">_</span></div>
+        <div class="brand-titles">
+          <div class="brand-title">TBA Coding Club</div>
+          <div class="brand-subtitle">Learn Python & Pygame with Mr Boswell</div>
+          
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <button class="nav-btn active" data-nav="home" onclick="navigateTo('home')">Home</button>
+        <button class="nav-btn" data-nav="tools" onclick="openTool(currentToolId)">Tools</button>
+        <button class="nav-btn" data-nav="games" onclick="navigateTo('games')">Game Lab</button>
+        <button class="nav-btn" data-nav="yourgames" onclick="navigateTo('yourgames')">Your Games</button>
+      </nav>
+    </div>
+
+    <div class="nav-right">
+      <button class="icon-btn" onclick="toggleMode()" aria-label="Toggle light or dark mode">
+        <span id="modeIcon">☀️</span>
+        <span id="modeLabel">Light</span>
+      </button>
+
+      <select id="themeDropdown" class="theme-select" aria-label="Colour theme" onchange="selectPalette(this.value)">
+        <option value="arcade">Arcade</option>
+        <option value="chalkboard">Chalkboard</option>
+        <option value="blueprint">Blueprint</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="forest">Forest</option>
+        <option value="sunset">Sunset</option>
+        <option value="dracula">Dracula</option>
+        <option value="matrix">Matrix</option>
+        <option value="ocean">Ocean</option>
+        <option value="retro">Retro 8-Bit</option>
+      </select>
+
+      <div class="a11y-wrapper" id="a11yWrapper">
+        <button class="icon-btn" onclick="toggleA11yMenu()" aria-label="Accessibility settings">
+          <span>Accessibility</span>
+        </button>
+        <div class="a11y-dropdown" id="a11yDropdown" role="menu">
+          <div class="a11y-dropdown-title">Display &amp; Reading Aids</div>
+          <button class="a11y-option" id="a11y-large-text" onclick="toggleA11yOption('large-text')">
+            <span>Larger Text</span><span id="badge-large-text">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-dyslexic" onclick="toggleA11yOption('dyslexic')">
+            <span>Dyslexia-Friendly Font</span><span id="badge-dyslexic">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-high-contrast" onclick="toggleA11yOption('high-contrast')">
+            <span>High Contrast</span><span id="badge-high-contrast">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-invert" onclick="toggleA11yOption('invert')">
+            <span>Invert Colours</span><span id="badge-invert">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-reduce-motion" onclick="toggleA11yOption('reduce-motion')">
+            <span>Pause Animations</span><span id="badge-reduce-motion">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-focus-rings" onclick="toggleA11yOption('focus-rings')">
+            <span>Strong Focus Rings</span><span id="badge-focus-rings">OFF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="mainContent">
+    <!-- ==================== VIEW 1: HOME ==================== -->
+    <section id="view-home" class="subview active">
+      <div class="welcome-banner">
+        <div>
+          <h1>TBA Coding Club</h1>
+          <div class="subtitle-lead">Interactive Tools • Games • Lessons</div>
+          <p>Clickk any tool or game to open, lessons coming soon.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-3col">
+        <!-- COLUMN 1: TOOLS -->
+        <section class="dashboard-column" aria-label="Interactive Tools">
+          <div class="column-header">
+            <h2>Tools</h2>
+            <div class="filter-pills">
+              <button class="pill-btn active" onclick="filterTools('all', this)">All (7)</button>
+              <button class="pill-btn" onclick="filterTools('pygame', this)">Pygame (4)</button>
+              <button class="pill-btn" onclick="filterTools('python', this)">Maths &amp; AI (3)</button>
+            </div>
+          </div>
+
+          <div class="column-cards-stack" id="toolsColumnStack">
+            <article class="tool-card" data-cat="pygame" tabindex="0" role="button" onclick="openTool('grid')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTool('grid');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">(x,y)</div>
+                  <span class="topic-tag">Pygame • Coordinates</span>
+                </div>
+                <h3>2D Coordinate Grid</h3>
+                <p>Click or drag on an 800×600 screen to inspect exact X and Y pixel positions.</p>
+                <canvas class="mini-tool-canvas" id="mini-tool-grid" width="260" height="118" aria-label="2D Coordinate Grid preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Full Tool</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="tool-card" data-cat="pygame" tabindex="0" role="button" onclick="openTool('inspector')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTool('inspector');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">RGB</div>
+                  <span class="topic-tag">Pygame • Colours &amp; Rects</span>
+                </div>
+                <h3>RGB &amp; Rect Inspector</h3>
+                <p>Mix Red, Green, and Blue light from 0 to 255 and inspect pygame.Rect edges.</p>
+                <canvas class="mini-tool-canvas" id="mini-tool-inspector" width="260" height="118" aria-label="RGB and Rect Inspector preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Full Tool</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="tool-card" data-cat="pygame" tabindex="0" role="button" onclick="openTool('movement')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTool('movement');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">WASD</div>
+                  <span class="topic-tag">Pygame • Input</span>
+                </div>
+                <h3>Movement &amp; Boundaries</h3>
+                <p>Hold Arrow keys or D-Pad buttons and watch the matching Python lines light up.</p>
+                <canvas class="mini-tool-canvas" id="mini-tool-movement" width="260" height="118" aria-label="Movement preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Full Tool</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="tool-card" data-cat="pygame" tabindex="0" role="button" onclick="openTool('collision')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTool('collision');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">HIT</div>
+                  <span class="topic-tag">Pygame • Hitboxes</span>
+                </div>
+                <h3>Hitbox &amp; Collision Lab</h3>
+                <p>Drag two rectangles together to test colliderect() overlap and live score updates.</p>
+                <canvas class="mini-tool-canvas" id="mini-tool-collision" width="260" height="118" aria-label="Collision preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Full Tool</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="tool-card" data-cat="python" tabindex="0" role="button" onclick="openTool('gravity')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTool('gravity');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-phy">v+g</div>
+                  <span class="topic-tag">Physics • Jumping</span>
+                </div>
+                <h3>Gravity &amp; Jump Sandbox</h3>
+                <p>Tweak jump power and gravity to see how velocity updates Y position every frame.</p>
+                <canvas class="mini-tool-canvas" id="mini-tool-gravity" width="260" height="118" aria-label="Gravity preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Full Tool</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="tool-card" data-cat="python" tabindex="0" role="button" onclick="openTool('patrol')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTool('patrol');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-phy">AI</div>
+                  <span class="topic-tag">Game AI • Distance</span>
+                </div>
+                <h3>Enemy Patrol &amp; Chase AI</h3>
+                <p>Move the player near a guard to trigger chase mode using math.hypot() distance.</p>
+                <canvas class="mini-tool-canvas" id="mini-tool-patrol" width="260" height="118" aria-label="Patrol AI preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Full Tool</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="tool-card" data-cat="python" tabindex="0" role="button" onclick="openTool('aiming')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTool('aiming');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-phy">deg°</div>
+                  <span class="topic-tag">Maths • Angles</span>
+                </div>
+                <h3>Mouse Aiming (math.atan2)</h3>
+                <p>Aim around a turret to calculate dx, dy, and rotation angle in degrees.</p>
+                <canvas class="mini-tool-canvas" id="mini-tool-aiming" width="260" height="118" aria-label="Aiming preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Full Tool</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- COLUMN 2: GAME LAB -->
+        <section class="dashboard-column" aria-label="Game Lab">
+          <div class="column-header">
+            <h2>Game Lab</h2>
+            <span class="topic-tag">Play &amp; Watch Code</span>
+          </div>
+
+          <div class="column-cards-stack">
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('pong');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('pong');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">PNG</div>
+                  <span class="topic-tag">Pygame • Paddles</span>
+                </div>
+                <h3>1. Pong</h3>
+                <p>Bounce the ball past the computer paddle while watching live code lines highlight.</p>
+                <canvas class="mini-game-canvas" id="mini-pong" width="240" height="125" aria-label="Pong live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('snake');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('snake');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">SNK</div>
+                  <span class="topic-tag">Python • Lists</span>
+                </div>
+                <h3>2. Snake</h3>
+                <p>Steer a growing snake list across the grid and eat apples without hitting yourself.</p>
+                <canvas class="mini-game-canvas" id="mini-snake" width="240" height="125" aria-label="Snake live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('tetris');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('tetris');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">TET</div>
+                  <span class="topic-tag">Python • 2D Grids</span>
+                </div>
+                <h3>3. Tetris</h3>
+                <p>Rotate and stack falling blocks in a 2D grid array to clear full horizontal lines.</p>
+                <canvas class="mini-game-canvas" id="mini-tetris" width="240" height="125" aria-label="Tetris live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('invaders');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('invaders');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">INV</div>
+                  <span class="topic-tag">Pygame • Bullets</span>
+                </div>
+                <h3>4. Space Invaders</h3>
+                <p>Move your ship and fire lasers at marching aliens using lists of bullets.</p>
+                <canvas class="mini-game-canvas" id="mini-invaders" width="240" height="125" aria-label="Space Invaders live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('breakout');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('breakout');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">BRK</div>
+                  <span class="topic-tag">Pygame • Collisions</span>
+                </div>
+                <h3>5. Brick Breakout</h3>
+                <p>Deflect the ball off your paddle to smash colourful rows of bricks.</p>
+                <canvas class="mini-game-canvas" id="mini-breakout" width="240" height="125" aria-label="Breakout live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('flappy');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('flappy');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">FLP</div>
+                  <span class="topic-tag">Physics • Velocity</span>
+                </div>
+                <h3>6. Flappy Bird</h3>
+                <p>Flap upward against gravity and thread through moving green pipe gaps.</p>
+                <canvas class="mini-game-canvas" id="mini-flappy" width="240" height="125" aria-label="Flappy Bird live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('maze');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('maze');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">MZE</div>
+                  <span class="topic-tag">Python • Booleans</span>
+                </div>
+                <h3>7. Maze Escape</h3>
+                <p>Navigate around solid walls, collect the yellow key, and unlock the exit door.</p>
+                <canvas class="mini-game-canvas" id="mini-maze" width="240" height="125" aria-label="Maze Escape live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+
+            <article class="home-game-preview-card" tabindex="0" role="button" onclick="navigateTo('games'); selectGame('asteroids');" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('games');selectGame('asteroids');}">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-game">AST</div>
+                  <span class="topic-tag">Pygame • Spawning</span>
+                </div>
+                <h3>8. Asteroid Dodger</h3>
+                <p>Steer left and right to dodge falling space rocks and rack up your score.</p>
+                <canvas class="mini-game-canvas" id="mini-asteroids" width="240" height="125" aria-label="Asteroid Dodger live preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Play &amp; Inspect Code</span>
+                <span aria-hidden="true">→</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- COLUMN 3: LEARN -->
+        <section class="dashboard-column" aria-label="Learn Modules">
+          <div class="column-header">
+            <h2>Learn</h2>
+            <span class="coming-soon-badge">Coming Soon</span>
+          </div>
+
+          <div class="column-cards-stack">
+            <article class="learn-tile-card" aria-disabled="true">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-learn">01</div>
+                  <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+                <h3>Variables &amp; Input</h3>
+                <p>Store player names, scores, and lives in variables and react to keyboard presses.</p>
+                <canvas class="mini-learn-canvas" id="mini-learn-vars" width="260" height="118" aria-label="Variables preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Interactive Lesson</span>
+                <span>Soon</span>
+              </div>
+            </article>
+
+            <article class="learn-tile-card" aria-disabled="true">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-learn">02</div>
+                  <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+                <h3>The 60 FPS Game Loop</h3>
+                <p>See how games check keys, move sprites, test hits, and draw 60 times a second.</p>
+                <canvas class="mini-learn-canvas" id="mini-learn-loops" width="260" height="118" aria-label="Game loop preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Interactive Lesson</span>
+                <span>Soon</span>
+              </div>
+            </article>
+
+            <article class="learn-tile-card" aria-disabled="true">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-learn">03</div>
+                  <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+                <h3>Rects &amp; Collisions</h3>
+                <p>Build player hitboxes with pygame.Rect and trigger coins, traps, and solid walls.</p>
+                <canvas class="mini-learn-canvas" id="mini-learn-rects" width="260" height="118" aria-label="Rectangles preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Interactive Lesson</span>
+                <span>Soon</span>
+              </div>
+            </article>
+
+            <article class="learn-tile-card" aria-disabled="true">
+              <div class="tile-body">
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-learn">04</div>
+                  <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+                <h3>Gravity &amp; Jumping</h3>
+                <p>Combine upward jump velocity with downward gravity for smooth platformer jumps.</p>
+                <canvas class="mini-learn-canvas" id="mini-learn-physics" width="260" height="118" aria-label="Gravity physics preview"></canvas>
+              </div>
+              <div class="tool-card-footer">
+                <span>Interactive Lesson</span>
+                <span>Soon</span>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: TOOL WORKSPACE ==================== -->
+    <section id="view-workspace" class="workspace">
+      <div class="workspace-header">
+        <div class="workspace-title-group">
+          <button class="back-btn" onclick="navigateTo('home')">← Home</button>
+          <div>
+            <h2 id="activeToolTitle" style="font-size:1.12rem;">2D Pygame Coordinate Grid Visualizer</h2>
+            <p id="activeToolSubtitle" style="font-size:0.82rem; color:var(--text-muted);">Explore (0, 0) top-left screen coordinates and pygame.draw.rect parameters.</p>
+          </div>
+        </div>
+
+        <div class="tool-switcher" role="tablist" aria-label="Switch tool">
+          <button class="switch-chip active" data-tool="grid" onclick="openTool('grid')">1. Grid</button>
+          <button class="switch-chip" data-tool="inspector" onclick="openTool('inspector')">2. RGB &amp; Rect</button>
+          <button class="switch-chip" data-tool="movement" onclick="openTool('movement')">3. Movement</button>
+          <button class="switch-chip" data-tool="collision" onclick="openTool('collision')">4. Hitboxes</button>
+          <button class="switch-chip" data-tool="gravity" onclick="openTool('gravity')">5. Gravity</button>
+          <button class="switch-chip" data-tool="patrol" onclick="openTool('patrol')">6. Patrol AI</button>
+          <button class="switch-chip" data-tool="aiming" onclick="openTool('aiming')">7. Aiming</button>
+        </div>
+      </div>
+
+      <!-- TOOL 1: GRID -->
+      <div id="tool-grid" class="tool-pane">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>800×600 Pygame Window (Click or Drag)</span>
+              <div class="toggle-row">
+                <button class="btn btn-secondary" onclick="toggleGridLines()">Toggle Grid</button>
+                <button class="btn btn-secondary" onclick="resetGridBox()">Reset</button>
+              </div>
+            </div>
+            <canvas id="gridCanvas" class="pg-canvas" width="800" height="600"></canvas>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Position &amp; Size Controls</span></div>
+            <div class="panel-grid-2">
+              <div class="form-row"><label for="gridX">X Position (0–800)</label><input id="gridX" class="input-ctrl" type="number" value="240" oninput="syncGridFromInputs()" /></div>
+              <div class="form-row"><label for="gridY">Y Position (0–600)</label><input id="gridY" class="input-ctrl" type="number" value="160" oninput="syncGridFromInputs()" /></div>
+              <div class="form-row"><label for="gridW">Width (px)</label><input id="gridW" class="input-ctrl" type="number" value="80" oninput="syncGridFromInputs()" /></div>
+              <div class="form-row"><label for="gridH">Height (px)</label><input id="gridH" class="input-ctrl" type="number" value="80" oninput="syncGridFromInputs()" /></div>
+            </div>
+            <div class="box-header">
+              <span>Live Python Code</span>
+              <button class="btn" onclick="copyRawText('gridCodeOutput', this)">Copy Code</button>
+            </div>
+            <pre class="code-block" id="gridCodeOutput"></pre>
+            <div class="hint-banner"><strong>Remember:</strong> In Pygame, <code>(0, 0)</code> is the <strong>top-left</strong> corner. Increasing <code>Y</code> moves <strong>down</strong> the screen!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 2: INSPECTOR -->
+      <div id="tool-inspector" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Live Rect Preview</span>
+              <div class="toggle-row">
+                <span class="topic-tag" id="inspRgbTag">RGB: (45, 212, 191)</span>
+                <span class="topic-tag" id="inspHexTag">HEX: #2DD4BF</span>
+              </div>
+            </div>
+            <canvas id="inspectorCanvas" class="pg-canvas" width="500" height="340"></canvas>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Mix Colour (0–255) &amp; Rect Values</span></div>
+            <div class="form-row"><label for="sliderR">Red: <strong id="lblR">45</strong></label><input id="sliderR" type="range" min="0" max="255" value="45" oninput="updateInspector()" /></div>
+            <div class="form-row"><label for="sliderG">Green: <strong id="lblG">212</strong></label><input id="sliderG" type="range" min="0" max="255" value="212" oninput="updateInspector()" /></div>
+            <div class="form-row"><label for="sliderB">Blue: <strong id="lblB">191</strong></label><input id="sliderB" type="range" min="0" max="255" value="191" oninput="updateInspector()" /></div>
+            <div class="panel-grid-2">
+              <div class="form-row"><label for="inspX">rect.x</label><input id="inspX" class="input-ctrl" type="number" value="120" oninput="drawInspectorCanvas()" /></div>
+              <div class="form-row"><label for="inspY">rect.y</label><input id="inspY" class="input-ctrl" type="number" value="90" oninput="drawInspectorCanvas()" /></div>
+              <div class="form-row"><label for="inspW">rect.width</label><input id="inspW" class="input-ctrl" type="number" value="180" oninput="drawInspectorCanvas()" /></div>
+              <div class="form-row"><label for="inspH">rect.height</label><input id="inspH" class="input-ctrl" type="number" value="130" oninput="drawInspectorCanvas()" /></div>
+            </div>
+            <div class="box-header">
+              <span>Live Python Code</span>
+              <button class="btn" onclick="copyRawText('inspectorCodeOutput', this)">Copy Code</button>
+            </div>
+            <pre class="code-block" id="inspectorCodeOutput"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 3: MOVEMENT -->
+      <div id="tool-movement" class="tool-pane" style="display:none;">
+        <div class="panel-grid-3">
+          <div class="box">
+            <div class="box-header">
+              <span>Player Arena (400×300)</span>
+              <span class="topic-tag" id="movePosReadout">X: 180, Y: 130</span>
+            </div>
+            <canvas id="moveCanvas" class="pg-canvas" width="400" height="300"></canvas>
+            <div class="toggle-row">
+              <button class="toggle-pill on" id="toggleClampBtn" onclick="toggleMoveClamp()">Boundary Clamp: ON</button>
+              <button class="btn btn-secondary" onclick="resetMovePlayer()">Centre Player</button>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Live Highlighted Code</span></div>
+            <div class="live-code-panel" id="moveLiveCodePanel"></div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>On-Screen D-Pad &amp; Key States</span></div>
+            <div class="dpad" aria-label="Directional pad">
+              <div></div>
+              <button class="dpad-btn" id="btnUp" onpointerdown="setVirtualKey('ArrowUp', true)" onpointerup="setVirtualKey('ArrowUp', false)" onpointerleave="setVirtualKey('ArrowUp', false)">▲</button>
+              <div></div>
+              <button class="dpad-btn" id="btnLeft" onpointerdown="setVirtualKey('ArrowLeft', true)" onpointerup="setVirtualKey('ArrowLeft', false)" onpointerleave="setVirtualKey('ArrowLeft', false)">◀</button>
+              <button class="dpad-btn" id="btnDown" onpointerdown="setVirtualKey('ArrowDown', true)" onpointerup="setVirtualKey('ArrowDown', false)" onpointerleave="setVirtualKey('ArrowDown', false)">▼</button>
+              <button class="dpad-btn" id="btnRight" onpointerdown="setVirtualKey('ArrowRight', true)" onpointerup="setVirtualKey('ArrowRight', false)" onpointerleave="setVirtualKey('ArrowRight', false)">▶</button>
+            </div>
+            <pre class="console-box" id="keyStatesBox"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 4: COLLISION -->
+      <div id="tool-collision" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Drag Blue Square into Red Box</span>
+              <div class="toggle-row">
+                <span class="topic-tag" id="collideBoolBadge">colliderect: FALSE</span>
+                <span class="topic-tag" id="collideScoreBadge">score: 0</span>
+                <button class="btn btn-secondary" onclick="resetCollisionDemo()">Reset</button>
+              </div>
+            </div>
+            <canvas id="collisionCanvas" class="pg-canvas" width="480" height="340"></canvas>
+          </div>
+
+          <div class="box">
+            <div class="box-header">
+              <span>Live Python Code</span>
+              <button class="btn" onclick="copyRawText('collisionCodeOutput', this)">Copy Code</button>
+            </div>
+            <pre class="code-block" id="collisionCodeOutput"></pre>
+            <div class="box-header"><span>Event Console</span></div>
+            <pre class="console-box" id="collisionConsole">Drag the blue player square into the red target box...</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 5: GRAVITY -->
+      <div id="tool-gravity" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Platformer Physics Arena</span>
+              <span class="topic-tag" id="gravStatusBadge">x: 235, y: 230 | vy: 0.0</span>
+            </div>
+            <canvas id="gravityCanvas" class="pg-canvas" width="520" height="340"></canvas>
+            <div class="game-pad-row">
+              <div class="toggle-row">
+                <button class="touch-btn" onpointerdown="gravState.keys.left=true" onpointerup="gravState.keys.left=false" onpointerleave="gravState.keys.left=false">◀ Left</button>
+                <button class="touch-btn" onpointerdown="gravState.keys.right=true" onpointerup="gravState.keys.right=false" onpointerleave="gravState.keys.right=false">Right ▶</button>
+              </div>
+              <button class="touch-btn action-btn" onclick="triggerJump()">Jump (Space)</button>
+              <button class="btn btn-secondary" onclick="resetGravity()">Reset</button>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Physics Sliders</span></div>
+            <div class="form-row"><label for="gravSlider">Gravity Pull: <strong id="gravValLbl">0.6</strong></label><input id="gravSlider" type="range" min="0.2" max="1.5" step="0.1" value="0.6" oninput="updateGravityParams()" /></div>
+            <div class="form-row"><label for="jumpSlider">Jump Velocity: <strong id="jumpValLbl">-15</strong></label><input id="jumpSlider" type="range" min="-24" max="-8" step="1" value="-15" oninput="updateGravityParams()" /></div>
+            <div class="box-header"><span>Live Python Code</span></div>
+            <pre class="code-block" id="gravityCodeOutput"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 6: PATROL AI -->
+      <div id="tool-patrol" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Move Cursor / Touch to Steer Blue Player</span>
+              <div class="toggle-row">
+                <span class="topic-tag" id="patrolStateTag">STATE: PATROL</span>
+                <button class="btn btn-secondary" onclick="resetPatrolEncounter()">Reset</button>
+              </div>
+            </div>
+            <canvas id="patrolCanvas" class="pg-canvas" width="520" height="320"></canvas>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Guard AI Parameters</span></div>
+            <div class="form-row"><label for="patrolSpeedSlider">Guard Speed: <strong id="patrolSpeedLbl">2.5</strong></label><input id="patrolSpeedSlider" type="range" min="1" max="5" step="0.5" value="2.5" oninput="updatePatrolParams()" /></div>
+            <div class="form-row"><label for="aggroSlider">Chase Radius (px): <strong id="aggroLbl">130</strong></label><input id="aggroSlider" type="range" min="60" max="220" step="10" value="130" oninput="updatePatrolParams()" /></div>
+            <div class="box-header"><span>Live Python Code</span></div>
+            <pre class="code-block" id="patrolCodeOutput"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 7: AIMING -->
+      <div id="tool-aiming" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Move Cursor / Touch Around Turret</span>
+              <span class="topic-tag" id="aimAngleTag">angle: 22°</span>
+            </div>
+            <canvas id="aimCanvas" class="pg-canvas" width="520" height="320"></canvas>
+          </div>
+
+          <div class="box">
+            <div class="box-header">
+              <span>Live Python Code</span>
+              <button class="btn" onclick="copyRawText('aimCodeOutput', this)">Copy Code</button>
+            </div>
+            <pre class="code-block" id="aimCodeOutput"></pre>
+            <div class="hint-banner"><strong>Why <code>-dy</code>?</strong> Because screen Y goes downwards, flipping <code>dy</code> turns Pygame coordinates into standard maths angles!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: GAME LAB ==================== -->
+    <section id="view-games" class="subview">
+      <div class="workspace-header" style="margin-bottom:14px;">
+        <div class="workspace-title-group">
+          <button class="back-btn" onclick="navigateTo('home')">← Home</button>
+          <div>
+            <h2 id="liveGameTitle" style="font-size:1.12rem;">1. Pong</h2>
+            <p id="liveGameControlsHelp" style="font-size:0.82rem; color:var(--text-muted);"><strong>Controls:</strong> Left Paddle: <code>↑ / ↓</code></p>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <span class="topic-tag" id="liveTickCounter">Frame: 0</span>
+          <button class="btn btn-secondary" onclick="restartActiveGame()">Restart Game</button>
+        </div>
+      </div>
+
+      <div class="game-tabs" role="tablist" aria-label="Select a game">
+        <button class="game-tab-btn active" data-game="pong" onclick="selectGame('pong')">1. Pong</button>
+        <button class="game-tab-btn" data-game="snake" onclick="selectGame('snake')">2. Snake</button>
+        <button class="game-tab-btn" data-game="tetris" onclick="selectGame('tetris')">3. Tetris</button>
+        <button class="game-tab-btn" data-game="invaders" onclick="selectGame('invaders')">4. Space Invaders</button>
+        <button class="game-tab-btn" data-game="breakout" onclick="selectGame('breakout')">5. Brick Breakout</button>
+        <button class="game-tab-btn" data-game="flappy" onclick="selectGame('flappy')">6. Flappy Bird</button>
+        <button class="game-tab-btn" data-game="maze" onclick="selectGame('maze')">7. Maze Escape</button>
+        <button class="game-tab-btn" data-game="asteroids" onclick="selectGame('asteroids')">8. Asteroid Dodger</button>
+      </div>
+
+      <div class="games-workspace">
+        <div class="box">
+          <div class="box-header">
+            <span>Live Pygame Canvas</span>
+            <span class="topic-tag">60 FPS</span>
+          </div>
+          <canvas id="liveGameCanvas" class="pg-canvas" width="500" height="380"></canvas>
+
+          <div class="game-pad-row" id="gameTouchControls" aria-label="Touch game controls">
+            <div class="dpad">
+              <div></div>
+              <button class="dpad-btn" data-gkey="ArrowUp" onpointerdown="setGameKey('ArrowUp', true)" onpointerup="setGameKey('ArrowUp', false)" onpointerleave="setGameKey('ArrowUp', false)">▲</button>
+              <div></div>
+              <button class="dpad-btn" data-gkey="ArrowLeft" onpointerdown="setGameKey('ArrowLeft', true)" onpointerup="setGameKey('ArrowLeft', false)" onpointerleave="setGameKey('ArrowLeft', false)">◀</button>
+              <button class="dpad-btn" data-gkey="ArrowDown" onpointerdown="setGameKey('ArrowDown', true)" onpointerup="setGameKey('ArrowDown', false)" onpointerleave="setGameKey('ArrowDown', false)">▼</button>
+              <button class="dpad-btn" data-gkey="ArrowRight" onpointerdown="setGameKey('ArrowRight', true)" onpointerup="setGameKey('ArrowRight', false)" onpointerleave="setGameKey('ArrowRight', false)">▶</button>
+            </div>
+            <button class="touch-btn action-btn" data-gkey="Space" onpointerdown="setGameKey('Space', true)" onpointerup="setGameKey('Space', false)" onpointerleave="setGameKey('Space', false)">Action / Flap / Shoot</button>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px; min-width:0;">
+          <div class="box">
+            <div class="box-header">
+              <span id="codeBoxHeading">Live Python Execution</span>
+              <div class="toggle-row">
+                <div class="legend-pills">
+                  <span class="legend-dot"><span class="dot-grey"></span>Running</span>
+                  <span class="legend-dot"><span class="dot-green"></span>Changed</span>
+                </div>
+                <button class="toggle-pill" id="fullCodeToggleBtn" onclick="toggleFullGameCode()">Show Full Code</button>
+                <button class="btn" id="copyFullCodeBtn" style="display:none;" onclick="copyFullGameCode(this)">Copy Full Script</button>
+              </div>
+            </div>
+            <div class="live-code-panel" id="liveCodeContainer"></div>
+            <div class="live-code-panel" id="fullGameCodeBlock" style="display:none;"></div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Live Variable Watch</span></div>
+            <div class="var-watch-grid" id="liveVarWatchGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: YOUR GAMES (NEON JUMP) ==================== -->
+    <section id="view-yourgames" class="subview">
+      <div class="workspace-header" style="margin-bottom:14px;">
+        <div class="workspace-title-group">
+          <button class="back-btn" onclick="navigateTo('home')">← Home</button>
+          <div>
+            <h2 id="showcaseActiveTitle" style="font-size:1.12rem;">Neon Jump by Mr Boswell</h2>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <button class="btn btn-secondary" onclick="handleShowcaseExtraAction()">Main Menu / Shop</button>
+          <button class="btn" onclick="restartShowcaseGame()">Restart Run</button>
+        </div>
+      </div>
+
+      <div class="showcase-stage-layout">
+        <div class="box">
+          <div class="box-header">
+            <span>Featured Teacher Game</span>
+            <span class="topic-tag" id="showcaseHudBadge">Bank: 0 • Q:- E:-</span>
+          </div>
+          <canvas id="showcaseCanvas" class="pg-canvas" width="540" height="380"></canvas>
+          <div class="game-pad-row" id="showcaseTouchControls" aria-label="Neon Jump touch controls">
+            <button class="touch-btn action-btn" data-skey="Space" onpointerdown="setShowcaseKey('Space', true)" onpointerup="setShowcaseKey('Space', false)" onpointerleave="setShowcaseKey('Space', false)">Jump / Fly (Space)</button>
+            <button class="touch-btn" data-skey="KeyQ" onpointerdown="setShowcaseKey('KeyQ', true)" onpointerup="setShowcaseKey('KeyQ', false)" onpointerleave="setShowcaseKey('KeyQ', false)">Use Slot [Q]</button>
+            <button class="touch-btn" data-skey="KeyE" onpointerdown="setShowcaseKey('KeyE', true)" onpointerup="setShowcaseKey('KeyE', false)" onpointerleave="setShowcaseKey('KeyE', false)">Use Slot [E]</button>
+            <button class="touch-btn" data-skey="KeyR" onpointerdown="setShowcaseKey('KeyR', true)" onpointerup="setShowcaseKey('KeyR', false)" onpointerleave="setShowcaseKey('KeyR', false)">Restart (R)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px; min-width:0;">
+          <div class="box">
+            <div class="box-header"><span>Game Rules &amp; Power-Ups</span></div>
+            <div id="showcaseInfoBody" style="font-size:0.86rem; color:var(--text-muted); line-height:1.55; display:flex; flex-direction:column; gap:8px;"></div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Live Python / Pygame State</span></div>
+            <pre class="code-block" id="showcaseCodeSnippet"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    TBA Coding Club - Any questions -> Mr Boswell
+  </footer>
+
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/theme.js"></script>
+  <script src="js/core/a11y.js"></script>
+  <script src="js/core/router.js"></script>
+  <script src="js/tools/grid.js"></script>
+  <script src="js/tools/inspector.js"></script>
+  <script src="js/tools/movement.js"></script>
+  <script src="js/tools/collision.js"></script>
+  <script src="js/tools/gravity.js"></script>
+  <script src="js/tools/patrol.js"></script>
+  <script src="js/tools/aiming.js"></script>
+  <script src="js/tools/registry.js"></script>
+  <script src="js/games/data/live-snippets.js"></script>
+  <script src="js/games/data/full-scripts.js"></script>
+  <script src="js/games/pong.js"></script>
+  <script src="js/games/snake.js"></script>
+  <script src="js/games/tetris.js"></script>
+  <script src="js/games/invaders.js"></script>
+  <script src="js/games/breakout.js"></script>
+  <script src="js/games/flappy.js"></script>
+  <script src="js/games/maze.js"></script>
+  <script src="js/games/asteroids.js"></script>
+  <script src="js/games/lab.js"></script>
+  <script src="js/home/mini-previews.js"></script>
+  <script src="js/showcase/neonjump.js"></script>
+  <script src="js/showcase/showcase.js"></script>
+  <script src="js/core/input.js"></script>
+  <script src="js/core/main-loop.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

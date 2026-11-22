@@ -1,0 +1,24 @@
+/* ==================== INITIALIZATION ==================== */
+loadSavedTheme();
+loadSavedA11y();
+refreshThemeColours();
+initGridPointer();
+initCollisionPointer();
+initPatrolPointer();
+initAimPointer();
+initMiniToolPreviews();
+updateDpadVisuals();
+drawGridCanvas();
+updateInspector();
+drawCollisionCanvas();
+updateGravityParams();
+updatePatrolParams();
+drawAimCanvas();
+initTetris();
+initInvaders();
+initBreakout();
+initAsteroids();
+initNeonJump();
+updateShowcaseUI();
+selectGame('pong');
+requestAnimationFrame(mainLoop);

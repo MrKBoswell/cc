@@ -1,0 +1,77 @@
+/* Tool Workspace Shell */
+.workspace {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.workspace.active {
+  display: flex;
+}
+
+.workspace-header {
+  background: var(--bg-panel);
+  border: var(--card-border-w) solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.workspace-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.back-btn {
+  background: var(--bg-card);
+  border: var(--card-border-w) solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: var(--card-radius);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.back-btn:hover, .back-btn:active {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.tool-switcher {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.tool-switcher::-webkit-scrollbar {
+  display: none;
+}
+
+.switch-chip {
+  background: var(--bg-card);
+  border: var(--card-border-w) solid var(--border-color);
+  color: var(--text-muted);
+  padding: 6px 11px;
+  border-radius: var(--card-radius);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.switch-chip.active {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(45, 212, 191, 0.12);
+}
+

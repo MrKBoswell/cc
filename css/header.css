@@ -1,0 +1,205 @@
+/* Theme Dropdown & Accessibility Menu */
+.theme-select {
+  background: var(--bg-card);
+  border: var(--card-border-w) solid var(--border-color);
+  color: var(--text-main);
+  padding: 7px 10px;
+  border-radius: var(--card-radius);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+.theme-select:hover, .theme-select:focus {
+  border-color: var(--accent-cyan);
+}
+
+.a11y-wrapper {
+  position: relative;
+}
+.a11y-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 260px;
+  background: var(--bg-panel);
+  border: 2px solid var(--border-highlight);
+  border-radius: var(--card-radius);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  z-index: 250;
+  flex-direction: column;
+  gap: 8px;
+}
+.a11y-dropdown.open {
+  display: flex;
+}
+.a11y-dropdown-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-cyan);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-color);
+}
+.a11y-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 10px;
+  border-radius: var(--card-radius);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+.a11y-option:hover {
+  border-color: var(--accent-cyan);
+}
+.a11y-option.active {
+  border-color: var(--accent-green);
+  background: rgba(34, 197, 94, 0.16);
+  color: var(--accent-green);
+}
+
+
+/* Top Navigation Bar */
+.topbar {
+  background-color: var(--bg-panel);
+  border-bottom: var(--card-border-w) solid var(--border-color);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-width: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand-badge {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: #091017;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: var(--card-radius);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* The "_" after >>> TBA blinks like a cursor in Thonny. */
+.brand-cursor {
+  animation: cursor-blink 1.1s steps(1) infinite;
+}
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+html.a11y-reduce-motion .brand-cursor {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-cursor { animation: none; }
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brand-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+.brand-subtitle {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--card-radius);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.nav-btn:hover {
+  color: var(--text-main);
+  background-color: var(--bg-card-hover);
+}
+
+.nav-btn.active {
+  color: var(--accent-cyan);
+  background-color: rgba(45, 212, 191, 0.12);
+  box-shadow: inset 0 -2px 0 var(--accent-cyan);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  background: var(--bg-card);
+  border: var(--card-border-w) solid var(--border-color);
+  color: var(--text-main);
+  padding: 7px 11px;
+  border-radius: var(--card-radius);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.15s;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent-cyan);
+}
+

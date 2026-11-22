@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark" data-palette="arcade">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<title>TBA Coding Club — With Mr Boswell</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b1018'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='30' font-weight='bold' fill='%232dd4bf' text-anchor='middle'%3E%3E_%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/a11y.css" />
+<link rel="stylesheet" href="css/header.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/home.css" />
+<link rel="stylesheet" href="css/tools.css" />
+<link rel="stylesheet" href="css/games.css" />
+<link rel="stylesheet" href="css/showcase.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="nav-left">
+      <div class="brand" onclick="navigateTo('home')">
+        <span class="brand-badge" aria-hidden="true">&gt;&gt;&gt; TBA<span class="brand-cursor">_</span></span>
+        <div class="brand-titles">
+          <span class="brand-title">Coding Club</span>
+          <span class="brand-subtitle">With Mr Boswell</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <button class="nav-btn active" data-nav="home" onclick="navigateTo('home')">Home</button>
+        <button class="nav-btn" data-nav="learn" onclick="navigateTo('learn')">Learn</button>
+        <button class="nav-btn" data-nav="games" onclick="navigateTo('games')">Game Lab</button>
+        <button class="nav-btn" data-nav="yourgames" onclick="navigateTo('yourgames')">Your Games</button>
+        <button class="nav-btn" data-nav="tools" onclick="openTool('grid')">Tools</button>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="toggleMode()" title="Toggle Light/Dark Mode">
+        <span id="modeIcon">☀️</span> <span id="modeLabel">Light</span>
+      </button>
+      <select id="themeDropdown" class="theme-select" onchange="selectPalette(this.value)" title="Select Colour Theme">
+        <option value="arcade" selected>🕹️ Arcade (Default)</option>
+        <option value="chalkboard">🖍️ Chalkboard</option>
+        <option value="blueprint">📐 Blueprint</option>
+        <option value="cyberpunk">⚡ Cyberpunk</option>
+        <option value="forest">🌲 Forest</option>
+        <option value="sunset">🌅 Sunset</option>
+        <option value="dracula">🧛 Dracula</option>
+        <option value="matrix">💻 Matrix</option>
+        <option value="ocean">🌊 Ocean</option>
+        <option value="retro">👾 Retro 8-Bit</option>
+      </select>
+      <div class="a11y-wrapper" id="a11yWrapper">
+        <button class="icon-btn" onclick="toggleA11yMenu()" title="Accessibility Options">
+          <span>♿</span> <span>Accessibility</span>
+        </button>
+        <div class="a11y-dropdown" id="a11yDropdown">
+          <div class="a11y-dropdown-title">Accessibility Settings</div>
+          <button class="a11y-option" id="a11y-invert" onclick="toggleA11yOption('invert')">
+            <span>🔄 Invert Colours</span><span id="badge-invert">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-large-text" onclick="toggleA11yOption('large-text')">
+            <span>🔠 Bigger Text</span><span id="badge-large-text">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-dyslexic" onclick="toggleA11yOption('dyslexic')">
+            <span>📖 Dyslexia-Friendly Font</span><span id="badge-dyslexic">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-high-contrast" onclick="toggleA11yOption('high-contrast')">
+            <span>🌗 High Contrast Borders</span><span id="badge-high-contrast">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-reduce-motion" onclick="toggleA11yOption('reduce-motion')">
+            <span>⏸️ Pause Mini Animations</span><span id="badge-reduce-motion">OFF</span>
+          </button>
+          <button class="a11y-option" id="a11y-focus-rings" onclick="toggleA11yOption('focus-rings')">
+            <span>🎯 Strong Focus Outlines</span><span id="badge-focus-rings">OFF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== VIEW 1: PYGAME TOOLS & GAMES DASHBOARD ==================== -->
+    <section id="view-home" class="subview active">
+      <div class="dashboard-layout">
+        <div>
+          <div class="welcome-banner">
+            <div>
+              <h1>TBA Coding Club</h1>
+              <div class="subtitle-lead">With Mr Boswell</div>
+            </div>
+            <div class="filter-pills">
+              <button class="pill-btn active" onclick="filterTools('all', this)">All 7 Tools</button>
+              <button class="pill-btn" onclick="filterTools('core', this)">Core Pygame</button>
+              <button class="pill-btn" onclick="filterTools('gameplay', this)">Physics, AI &amp; Aiming</button>
+            </div>
+          </div>
+
+          <div id="coreSectionLabel" class="section-label">🎮 Core Pygame Visualizers &amp; Controls</div>
+          <div class="tools-grid" id="coreCardsGrid">
+            <div class="tool-card" data-cat="core" onclick="openTool('grid')">
+              <div>
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">XY</div>
+                  <span class="topic-tag">Coordinates</span>
+                </div>
+                <h3>2D Coordinate Grid Visualizer</h3>
+                <canvas id="mini-tool-grid" class="mini-tool-canvas" width="260" height="118"></canvas>
+                <p>Click or drag on an 800×600 Pygame screen to see <code>(x, y)</code> coordinates and live <code>draw.rect</code> code.</p>
+              </div>
+              <div class="tool-card-footer">
+                <span>Open Coordinate Grid</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <div class="tool-card" data-cat="core" onclick="openTool('inspector')">
+              <div>
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">RGB</div>
+                  <span class="topic-tag">Colours &amp; Rects</span>
+                </div>
+                <h3>RGB &amp; Rect Inspector</h3>
+                <canvas id="mini-tool-inspector" class="mini-tool-canvas" width="260" height="118"></canvas>
+                <p>Mix <code>(R, G, B)</code> tuples with sliders and inspect <code>rect.x</code>, <code>y</code>, <code>width</code>, and <code>height</code>.</p>
+              </div>
+              <div class="tool-card-footer">
+                <span>Inspect Colour &amp; Rect</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <div class="tool-card" data-cat="core" onclick="openTool('movement')">
+              <div>
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">⌨️</div>
+                  <span class="topic-tag">Input &amp; Live Code</span>
+                </div>
+                <h3>Movement &amp; Boundary Simulator</h3>
+                <canvas id="mini-tool-movement" class="mini-tool-canvas" width="260" height="118"></canvas>
+                <p>Hold keys or D-Pad buttons and watch the exact active Python lines highlight live on the right.</p>
+              </div>
+              <div class="tool-card-footer">
+                <span>Test Movement</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <div class="tool-card" data-cat="core" onclick="openTool('collision')">
+              <div>
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-pg">💥</div>
+                  <span class="topic-tag">Collisions</span>
+                </div>
+                <h3>Hitbox &amp; Collision Playground</h3>
+                <canvas id="mini-tool-collision" class="mini-tool-canvas" width="260" height="118"></canvas>
+                <p>Drag rectangles together to see <code>rect1.colliderect(rect2)</code> flip to <code>True</code> and trigger score updates.</p>
+              </div>
+              <div class="tool-card-footer">
+                <span>Test Hitboxes</span>
+                <span>→</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="gameplaySectionLabel" class="section-label" style="margin-top: 24px;">🚀 Gameplay Mechanics (Gravity, Patrol AI &amp; Mouse Aim)</div>
+          <div class="tools-grid" id="gameplayCardsGrid">
+            <div class="tool-card" data-cat="gameplay" onclick="openTool('gravity')">
+              <div>
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-phy">vy↓</div>
+                  <span class="topic-tag">Physics</span>
+                </div>
+                <h3>Gravity, Jump &amp; Velocity Sandbox</h3>
+                <canvas id="mini-tool-gravity" class="mini-tool-canvas" width="260" height="118"></canvas>
+                <p>Move left/right, jump off-screen with an upward XY tracker arrow, and adjust gravity acceleration.</p>
+              </div>
+              <div class="tool-card-footer">
+                <span>Launch Physics Sandbox</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <div class="tool-card" data-cat="gameplay" onclick="openTool('patrol')">
+              <div>
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-phy">👾</div>
+                  <span class="topic-tag">Enemy AI</span>
+                </div>
+                <h3>Enemy Patrol &amp; Waypoint AI</h3>
+                <canvas id="mini-tool-patrol" class="mini-tool-canvas" width="260" height="118"></canvas>
+                <p>Watch a guard pace a line, chase when in range, return to the nearest patrol point, and flash red on catch.</p>
+              </div>
+              <div class="tool-card-footer">
+                <span>Test Enemy AI</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <div class="tool-card" data-cat="gameplay" onclick="openTool('aiming')">
+              <div>
+                <div class="tool-card-top">
+                  <div class="tool-icon icon-phy">🎯</div>
+                  <span class="topic-tag">Math &amp; Aim</span>
+                </div>
+                <h3>Mouse Aiming &amp; Angle Rotation</h3>
+                <canvas id="mini-tool-aiming" class="mini-tool-canvas" width="260" height="118"></canvas>
+                <p>Touch or move your cursor around a turret to see <code>dx</code>, <code>dy</code>, and <code>math.atan2</code> angle updates live.</p>
+              </div>
+              <div class="tool-card-footer">
+                <span>Aim Turret</span>
+                <span>→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Games Section Below Tools on Homepage (8 Game Lab Games) -->
+          <div id="homeGamesSectionLabel" class="section-label" style="margin-top: 28px;">🕹️ Game Lab</div>
+          <div class="home-games-grid" id="homeGamesGrid">
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('pong');">
+              <div class="mini-game-title">Pong</div>
+              <canvas id="mini-pong" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('snake');">
+              <div class="mini-game-title">Snake</div>
+              <canvas id="mini-snake" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('tetris');">
+              <div class="mini-game-title">Tetris</div>
+              <canvas id="mini-tetris" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('invaders');">
+              <div class="mini-game-title">Space Invaders</div>
+              <canvas id="mini-invaders" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('breakout');">
+              <div class="mini-game-title">Brick Breakout</div>
+              <canvas id="mini-breakout" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('flappy');">
+              <div class="mini-game-title">Flappy Bird</div>
+              <canvas id="mini-flappy" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('maze');">
+              <div class="mini-game-title">Maze Escape</div>
+              <canvas id="mini-maze" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+            <div class="home-game-preview-card" onclick="navigateTo('games'); selectGame('asteroids');">
+              <div class="mini-game-title">Asteroid Dodger</div>
+              <canvas id="mini-asteroids" class="mini-game-canvas" width="240" height="125"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar">
+
+          <div class="sidebar-section">
+            <h4>Game Lab (8 Games)</h4>
+            <div class="activity-list">
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('pong');">
+                <strong>1. Pong</strong>
+                <span>Paddle Y coordinates &amp; ball velocity flips</span>
+              </div>
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('snake');">
+                <strong>2. Snake</strong>
+                <span>Grid movement, food spawn &amp; tail length</span>
+              </div>
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('tetris');">
+                <strong>3. Tetris</strong>
+                <span>Piece rotation, lines cleared &amp; drop speed</span>
+              </div>
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('invaders');">
+                <strong>4. Space Invaders</strong>
+                <span>Watch bullets &amp; alien lists update live</span>
+              </div>
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('breakout');">
+                <strong>5. Brick Breakout</strong>
+                <span>Ball bounce vectors &amp; brick collisions</span>
+              </div>
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('flappy');">
+                <strong>6. Flappy Bird</strong>
+                <span>Gravity, pipe score &amp; jump velocity</span>
+              </div>
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('maze');">
+                <strong>7. Maze Escape</strong>
+                <span>Wall collisions, key flags &amp; exit door</span>
+              </div>
+              <div class="activity-item" onclick="navigateTo('games'); selectGame('asteroids');">
+                <strong>8. Asteroid Dodger</strong>
+                <span>Random rocks &amp; dodged score counter</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: LEARN PAGE ==================== -->
+    <section id="view-learn" class="subview">
+      <div class="coming-soon-card">
+        <h1>Lessons are on their way!</h1>
+        <p>While you wait, try a tool or play a game in the Game Lab.</p>
+        <button class="back-btn" onclick="navigateTo('home')">← Back</button>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: INTERACTIVE TOOLS WORKSPACE ==================== -->
+    <section id="view-workspace" class="workspace">
+      <div class="workspace-header">
+        <div class="workspace-title-group">
+          <button class="back-btn" onclick="navigateTo('home')">← Back to Dashboard</button>
+          <div>
+            <h2 id="activeToolTitle" style="font-size: 1.15rem;">Tool Title</h2>
+            <p id="activeToolSubtitle" style="font-size: 0.84rem; color: var(--text-muted);">Tool subtitle</p>
+          </div>
+        </div>
+        <div class="tool-switcher" id="toolSwitcherBar">
+          <button class="switch-chip" data-tool="grid" onclick="openTool('grid')">1. 2D Grid</button>
+          <button class="switch-chip" data-tool="inspector" onclick="openTool('inspector')">2. RGB/Rect</button>
+          <button class="switch-chip" data-tool="movement" onclick="openTool('movement')">3. Movement</button>
+          <button class="switch-chip" data-tool="collision" onclick="openTool('collision')">4. Hitboxes</button>
+          <button class="switch-chip" data-tool="gravity" onclick="openTool('gravity')">5. Gravity</button>
+          <button class="switch-chip" data-tool="patrol" onclick="openTool('patrol')">6. Patrol AI</button>
+          <button class="switch-chip" data-tool="aiming" onclick="openTool('aiming')">7. Aiming</button>
+        </div>
+      </div>
+
+      <!-- TOOL 1: 2D PYGAME COORDINATE GRID VISUALIZER -->
+      <div id="tool-grid" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Pygame Screen (800 × 600)</span>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary" style="padding:5px 10px;" onclick="toggleGridLines()">Gridlines</button>
+                <button class="btn btn-secondary" style="padding:5px 10px;" onclick="resetGridBox()">Reset</button>
+              </div>
+            </div>
+            <canvas id="gridCanvas" class="pg-canvas" width="800" height="600"></canvas>
+            <p style="font-size:0.82rem; color: var(--text-muted);">Click or drag anywhere on the canvas to position the orange rectangle. Notice <code>(0, 0)</code> is top-left!</p>
+          </div>
+
+          <div class="box">
+            <div class="box-header">
+              <span>Live Python Code</span>
+              <button class="btn btn-secondary" style="padding:5px 10px; font-size:0.78rem;" onclick="copyRawText('gridCodeOutput', this)">Copy Code</button>
+            </div>
+            <div class="code-block" id="gridCodeOutput"></div>
+            <div class="panel-grid-2" style="gap: 10px;">
+              <div class="form-row">
+                <label>X Position (0–760)</label>
+                <input class="input-ctrl" type="number" id="gridX" value="240" step="10" oninput="syncGridFromInputs()" />
+              </div>
+              <div class="form-row">
+                <label>Y Position (0–560)</label>
+                <input class="input-ctrl" type="number" id="gridY" value="160" step="10" oninput="syncGridFromInputs()" />
+              </div>
+              <div class="form-row">
+                <label>Width (W)</label>
+                <input class="input-ctrl" type="number" id="gridW" value="80" step="10" oninput="syncGridFromInputs()" />
+              </div>
+              <div class="form-row">
+                <label>Height (H)</label>
+                <input class="input-ctrl" type="number" id="gridH" value="80" step="10" oninput="syncGridFromInputs()" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 2: RGB COLOR & PYGAME.RECT INSPECTOR -->
+      <div id="tool-inspector" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header"><span>Colour Inspector (RGB) &amp; Rect Dimensions</span></div>
+            <div class="form-row">
+              <label>RED (R): <strong id="lblR">128</strong></label>
+              <input type="range" min="0" max="255" value="128" id="sliderR" oninput="updateInspector()" />
+            </div>
+            <div class="form-row">
+              <label>GREEN (G): <strong id="lblG">64</strong></label>
+              <input type="range" min="0" max="255" value="64" id="sliderG" oninput="updateInspector()" />
+            </div>
+            <div class="form-row">
+              <label>BLUE (B): <strong id="lblB">255</strong></label>
+              <input type="range" min="0" max="255" value="255" id="sliderB" oninput="updateInspector()" />
+            </div>
+            <div style="display:flex; gap:12px; font-family:var(--font-mono); font-size:0.84rem; flex-wrap:wrap;">
+              <span class="topic-tag" id="inspHexTag">HEX: #8040FF</span>
+              <span class="topic-tag" id="inspRgbTag">RGB: (128, 64, 255)</span>
+            </div>
+            <div class="panel-grid-2" style="gap: 10px;">
+              <div class="form-row">
+                <label>rect.x</label>
+                <input class="input-ctrl" type="number" id="inspX" value="100" oninput="updateInspector()" />
+              </div>
+              <div class="form-row">
+                <label>rect.y</label>
+                <input class="input-ctrl" type="number" id="inspY" value="80" oninput="updateInspector()" />
+              </div>
+              <div class="form-row">
+                <label>rect.width</label>
+                <input class="input-ctrl" type="number" id="inspW" value="220" oninput="updateInspector()" />
+              </div>
+              <div class="form-row">
+                <label>rect.height</label>
+                <input class="input-ctrl" type="number" id="inspH" value="120" oninput="updateInspector()" />
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Live Rect Preview &amp; Python Snippet</span></div>
+            <canvas id="inspectorCanvas" class="pg-canvas" width="500" height="260"></canvas>
+            <div class="code-block" id="inspectorCodeOutput"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 3: PYGAME MOVEMENT & BOUNDARY SIMULATOR -->
+      <div id="tool-movement" class="tool-pane" style="display:none;">
+        <div class="panel-grid-3">
+          <div class="box">
+            <div class="box-header">
+              <span>Game Window (400 × 300)</span>
+              <span id="movePosReadout" style="font-family:var(--font-mono); font-size:0.82rem; color:var(--accent-cyan);">X: 180, Y: 130</span>
+            </div>
+            <canvas id="moveCanvas" class="pg-canvas" width="400" height="300"></canvas>
+            <div class="hint-banner" id="moveRuleBanner">Hold Arrow Keys / WASD or press the D-Pad buttons!</div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Interactive Arrow-Key Pad</span></div>
+            <div class="dpad">
+              <div></div>
+              <button class="dpad-btn" id="btnUp" onpointerdown="setVirtualKey('ArrowUp', true)" onpointerup="setVirtualKey('ArrowUp', false)" onpointerleave="setVirtualKey('ArrowUp', false)" onpointercancel="setVirtualKey('ArrowUp', false)">↑</button>
+              <div></div>
+              <button class="dpad-btn" id="btnLeft" onpointerdown="setVirtualKey('ArrowLeft', true)" onpointerup="setVirtualKey('ArrowLeft', false)" onpointerleave="setVirtualKey('ArrowLeft', false)" onpointercancel="setVirtualKey('ArrowLeft', false)">←</button>
+              <button class="dpad-btn" id="btnDown" onpointerdown="setVirtualKey('ArrowDown', true)" onpointerup="setVirtualKey('ArrowDown', false)" onpointerleave="setVirtualKey('ArrowDown', false)" onpointercancel="setVirtualKey('ArrowDown', false)">↓</button>
+              <button class="dpad-btn" id="btnRight" onpointerdown="setVirtualKey('ArrowRight', true)" onpointerup="setVirtualKey('ArrowRight', false)" onpointerleave="setVirtualKey('ArrowRight', false)" onpointercancel="setVirtualKey('ArrowRight', false)">→</button>
+            </div>
+            <div class="code-block" id="keyStatesBox" style="font-size:0.82rem;"></div>
+          </div>
+
+          <div class="box">
+            <div class="box-header">
+              <span>Live Python Movement Code</span>
+              <span class="legend-dot" style="font-size:0.74rem;"><span class="dot-green"></span> Active Line</span>
+            </div>
+            <div class="live-code-panel" id="moveLiveCodePanel"></div>
+            <div class="toggle-row">
+              <button class="toggle-pill on" id="toggleClampBtn" onclick="toggleMoveClamp()">Boundary Clamp: ON</button>
+              <button class="btn btn-secondary" style="padding: 6px 10px;" onclick="resetMovePlayer()">Centre Player</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 4: HITBOX & COLLIDERECT PLAYGROUND -->
+      <div id="tool-collision" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Hitbox Sandbox (Drag Blue Player Rect)</span>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary" style="padding:5px 10px;" onclick="resetCollisionDemo()">Reset</button>
+              </div>
+            </div>
+            <canvas id="collisionCanvas" class="pg-canvas" width="520" height="360"></canvas>
+            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.84rem; flex-wrap:wrap; gap:8px;">
+              <span id="collideBoolBadge" class="topic-tag">colliderect: FALSE</span>
+              <span id="collideScoreBadge" class="topic-tag">score: 0</span>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Live Collision Logic &amp; Console</span></div>
+            <div class="code-block" id="collisionCodeOutput"></div>
+            <div class="console-box" id="collisionConsole">Drag the blue player square into the red target box...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 5: GRAVITY, JUMP & VELOCITY SANDBOX -->
+      <div id="tool-gravity" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Platformer Physics Canvas (520 × 340)</span>
+              <button class="btn btn-secondary" style="padding:5px 10px;" onclick="resetGravity()">Reset</button>
+            </div>
+            <canvas id="gravityCanvas" class="pg-canvas" width="520" height="340"></canvas>
+
+            <div class="game-pad-row">
+              <div class="dpad">
+                <div></div>
+                <button class="dpad-btn" onpointerdown="triggerJump()">↑</button>
+                <div></div>
+                <button class="dpad-btn" id="gravPadLeft" onpointerdown="gravState.keys.left=true;this.classList.add('pressed')" onpointerup="gravState.keys.left=false;this.classList.remove('pressed')" onpointerleave="gravState.keys.left=false;this.classList.remove('pressed')" onpointercancel="gravState.keys.left=false;this.classList.remove('pressed')">←</button>
+                <div></div>
+                <button class="dpad-btn" id="gravPadRight" onpointerdown="gravState.keys.right=true;this.classList.add('pressed')" onpointerup="gravState.keys.right=false;this.classList.remove('pressed')" onpointerleave="gravState.keys.right=false;this.classList.remove('pressed')" onpointercancel="gravState.keys.right=false;this.classList.remove('pressed')">→</button>
+              </div>
+              <button class="touch-btn action-btn" onpointerdown="triggerJump()">↑ Jump</button>
+            </div>
+
+            <div class="panel-grid-2" style="gap:10px;">
+              <div class="form-row">
+                <label>Gravity Acceleration: <strong id="gravValLbl">0.6</strong></label>
+                <input type="range" min="0.2" max="1.5" step="0.1" value="0.6" id="gravSlider" oninput="updateGravityParams()" />
+              </div>
+              <div class="form-row">
+                <label>Jump Strength (vy): <strong id="jumpValLbl">-15</strong></label>
+                <input type="range" min="-28" max="-6" step="1" value="-15" id="jumpSlider" oninput="updateGravityParams()" />
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-header">
+              <span>Live Velocity &amp; Off-Screen Tracker Code</span>
+              <span id="gravStatusBadge" class="topic-tag">x: 235, y: 230</span>
+            </div>
+            <div class="code-block" id="gravityCodeOutput"></div>
+            <div class="hint-banner">
+              <strong>Try Jumping High!</strong> Crank Jump Strength up to <code>-26</code> and press Jump. Because the top edge isn't clamped, the square flies above <code>y = 0</code> and an arrow appears at the top showing its live <code>(x, y)</code> coordinates!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 6: ENEMY PATROL & WAYPOINT AI -->
+      <div id="tool-patrol" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Guard Patrol &amp; Aggro Radius (Move Cursor / Touch)</span>
+              <span id="patrolStateTag" class="topic-tag">STATE: PATROL</span>
+            </div>
+            <canvas id="patrolCanvas" class="pg-canvas" width="520" height="320"></canvas>
+            <div class="panel-grid-2" style="gap:10px;">
+              <div class="form-row">
+                <label>Guard Speed: <strong id="patrolSpeedLbl">2.5</strong> px/frame</label>
+                <input type="range" min="1" max="6" step="0.5" value="2.5" id="patrolSpeedSlider" oninput="updatePatrolParams()" />
+              </div>
+              <div class="form-row">
+                <label>Aggro Range: <strong id="aggroLbl">130</strong> px</label>
+                <input type="range" min="60" max="220" step="10" value="130" id="aggroSlider" oninput="updatePatrolParams()" />
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Enemy State Machine Code</span></div>
+            <div class="code-block" id="patrolCodeOutput"></div>
+            <div class="hint-banner">
+              <strong>4-State Enemy AI:</strong><br/>
+              • <code>PATROL</code>: Paces back and forth along the dashed patrol line.<br/>
+              • <code>CHASE</code>: Follows the player whenever <code>dist &lt; aggro_range</code>.<br/>
+              • <code>RETURN</code>: Walks back to the nearest point on the line when the player escapes.<br/>
+              • <strong>Caught:</strong> Flashes the screen red for 1 second and resets!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL 7: MOUSE AIMING & ANGLE ROTATION (MATH.ATAN2) -->
+      <div id="tool-aiming" class="tool-pane" style="display:none;">
+        <div class="panel-grid-2">
+          <div class="box">
+            <div class="box-header">
+              <span>Turret Aiming Arena (Touch or Move Cursor)</span>
+              <span id="aimAngleTag" class="topic-tag">angle: 0°</span>
+            </div>
+            <canvas id="aimCanvas" class="pg-canvas" width="520" height="320"></canvas>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Drag your finger or move your mouse anywhere on the canvas to aim the turret barrel and inspect <code>dx</code>, <code>dy</code>, and <code>math.atan2</code>.</p>
+          </div>
+
+          <div class="box">
+            <div class="box-header"><span>Trigonometry &amp; Rotation Code</span></div>
+            <div class="code-block" id="aimCodeOutput"></div>
+            <div class="hint-banner">
+              <strong>Pygame Tip:</strong> Because Pygame's Y-axis points downward, we pass <code>-dy</code> into <code>math.atan2(-dy, dx)</code> so rotating counter-clockwise matches <code>pygame.transform.rotate()</code>!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: GAME LAB (8 GAMES) ==================== -->
+    <section id="view-games" class="subview">
+      <div class="welcome-banner">
+        <div>
+          <h1>Game Lab</h1>
+          <p>Play each Pygame starter game and watch the Python code &amp; live variables update in real time.</p>
+        </div>
+        <div class="legend-pills">
+          <span class="legend-dot"><span class="dot-grey"></span> Currently Running</span>
+          <span class="legend-dot"><span class="dot-green"></span> Variable / State Changed</span>
+        </div>
+      </div>
+
+      <div class="game-tabs">
+        <button class="game-tab-btn active" data-game="pong" onclick="selectGame('pong')">🏓 1. Pong</button>
+        <button class="game-tab-btn" data-game="snake" onclick="selectGame('snake')">🐍 2. Snake</button>
+        <button class="game-tab-btn" data-game="tetris" onclick="selectGame('tetris')">🧱 3. Tetris</button>
+        <button class="game-tab-btn" data-game="invaders" onclick="selectGame('invaders')">👾 4. Space Invaders</button>
+        <button class="game-tab-btn" data-game="breakout" onclick="selectGame('breakout')">💥 5. Breakout</button>
+        <button class="game-tab-btn" data-game="flappy" onclick="selectGame('flappy')">🐦 6. Flappy Bird</button>
+        <button class="game-tab-btn" data-game="maze" onclick="selectGame('maze')">🗝️ 7. Maze Escape</button>
+        <button class="game-tab-btn" data-game="asteroids" onclick="selectGame('asteroids')">☄️ 8. Asteroid Dodger</button>
+      </div>
+
+      <div class="games-workspace">
+        <!-- Game Canvas + Movement-Style D-Pad Controls -->
+        <div class="box">
+          <div class="box-header">
+            <span id="liveGameTitle">1. Pong</span>
+            <button class="btn" style="padding:5px 12px;" onclick="restartActiveGame()">Restart Game</button>
+          </div>
+          <canvas id="liveGameCanvas" class="pg-canvas" width="500" height="380"></canvas>
+
+          <!-- Same 3x2 Arrow Layout as Tool 3 Movement + Action Button -->
+          <div class="game-pad-row" id="gameTouchControls">
+            <div class="dpad">
+              <div></div>
+              <button class="dpad-btn" data-gkey="ArrowUp" onpointerdown="setGameKey('ArrowUp', true)" onpointerup="setGameKey('ArrowUp', false)" onpointerleave="setGameKey('ArrowUp', false)" onpointercancel="setGameKey('ArrowUp', false)">↑</button>
+              <div></div>
+              <button class="dpad-btn" data-gkey="ArrowLeft" onpointerdown="setGameKey('ArrowLeft', true)" onpointerup="setGameKey('ArrowLeft', false)" onpointerleave="setGameKey('ArrowLeft', false)" onpointercancel="setGameKey('ArrowLeft', false)">←</button>
+              <button class="dpad-btn" data-gkey="ArrowDown" onpointerdown="setGameKey('ArrowDown', true)" onpointerup="setGameKey('ArrowDown', false)" onpointerleave="setGameKey('ArrowDown', false)" onpointercancel="setGameKey('ArrowDown', false)">↓</button>
+              <button class="dpad-btn" data-gkey="ArrowRight" onpointerdown="setGameKey('ArrowRight', true)" onpointerup="setGameKey('ArrowRight', false)" onpointerleave="setGameKey('ArrowRight', false)" onpointercancel="setGameKey('ArrowRight', false)">→</button>
+            </div>
+            <button class="touch-btn action-btn" data-gkey="Space" onpointerdown="setGameKey('Space', true)" onpointerup="setGameKey('Space', false)" onpointerleave="setGameKey('Space', false)" onpointercancel="setGameKey('Space', false)">Space / Action</button>
+          </div>
+
+          <div class="hint-banner" id="liveGameControlsHelp">
+            <strong>Controls:</strong> Move Left Paddle: <code>↑ / ↓</code>
+          </div>
+        </div>
+
+        <!-- Live Highlighted Code / Full Code Toggle + Variable Watch -->
+        <div class="box">
+          <div class="box-header">
+            <span id="codeBoxHeading">Live Python Execution</span>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <button class="toggle-pill" id="fullCodeToggleBtn" onclick="toggleFullGameCode()">Show Full Code</button>
+              <button class="btn btn-secondary" id="copyFullCodeBtn" style="display:none; padding:6px 11px;" onclick="copyFullGameCode(this)">Copy Code</button>
+              <span id="liveTickCounter" class="topic-tag">Frame: 0</span>
+            </div>
+          </div>
+          <div class="var-watch-grid" id="liveVarWatchGrid"></div>
+          <div class="live-code-panel" id="liveCodeContainer"></div>
+          <div class="live-code-panel" id="fullGameCodeBlock" style="display:none; max-height:460px; overflow:auto;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: YOUR GAMES — STUDENT SHOWCASE ==================== -->
+    <section id="view-yourgames" class="subview">
+      <div class="welcome-banner">
+        <div>
+          <h1>Your Games — Student Showcase</h1>
+          <p>Play games made for the TBA Coding Club showcase. Starting with two featured games built by Mr Boswell.</p>
+        </div>
+        <div class="filter-pills">
+          <span class="pill-btn active">2 Showcase Games</span>
+        </div>
+      </div>
+
+      <!-- Showcase Game Cards -->
+      <div class="showcase-selector-grid">
+        <div class="showcase-card active" id="showcase-card-minichess" onclick="selectShowcaseGame('minichess')">
+          <div class="tool-card-top">
+            <div class="tool-icon icon-pg">6×6</div>
+            <span class="topic-tag">Made by Mr Boswell</span>
+          </div>
+          <div>
+            <h3>Mini Chess</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">
+              Tactical 6×6 club chess variant with randomised Chess360 back ranks, board style toggle, move counter, and click or keyboard play.
+            </p>
+          </div>
+          <div class="showcase-meta">
+            <span>Turn-Based Strategy</span>
+            <span style="color:var(--accent-cyan); font-weight:700;">Play Showcase →</span>
+          </div>
+        </div>
+
+        <div class="showcase-card" id="showcase-card-neonjump" onclick="selectShowcaseGame('neonjump')">
+          <div class="tool-card-top">
+            <div class="tool-icon icon-phy">⚡</div>
+            <span class="topic-tag">Made by Mr Boswell</span>
+          </div>
+          <div>
+            <h3>Neon Jump</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">
+              Fast-paced neon rhythm platformer featuring jump/dash physics, spike hazards, and Mario-inspired power-ups with <code>Q</code> &amp; <code>E</code> activation.
+            </p>
+          </div>
+          <div class="showcase-meta">
+            <span>Arcade Platformer</span>
+            <span style="color:var(--accent-cyan); font-weight:700;">Play Showcase →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Showcase Stage -->
+      <div class="showcase-stage-layout">
+        <div class="box">
+          <div class="box-header">
+            <span id="showcaseActiveTitle">Mini Chess (6×6) — By Mr Boswell</span>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <span class="topic-tag" id="showcaseHudBadge">Turn: White</span>
+              <button class="btn btn-secondary" style="padding:5px 10px;" id="showcaseExtraBtn" onclick="handleShowcaseExtraAction()">Randomize 360 Rank</button>
+              <button class="btn" style="padding:5px 12px;" onclick="restartShowcaseGame()">Restart</button>
+            </div>
+          </div>
+
+          <canvas id="showcaseCanvas" class="pg-canvas" width="540" height="380"></canvas>
+
+          <div class="game-pad-row" id="showcaseTouchControls">
+            <div class="dpad">
+              <div></div>
+              <button class="dpad-btn" data-skey="ArrowUp" onpointerdown="setShowcaseKey('ArrowUp', true)" onpointerup="setShowcaseKey('ArrowUp', false)" onpointerleave="setShowcaseKey('ArrowUp', false)" onpointercancel="setShowcaseKey('ArrowUp', false)">↑</button>
+              <div></div>
+              <button class="dpad-btn" data-skey="ArrowLeft" onpointerdown="setShowcaseKey('ArrowLeft', true)" onpointerup="setShowcaseKey('ArrowLeft', false)" onpointerleave="setShowcaseKey('ArrowLeft', false)" onpointercancel="setShowcaseKey('ArrowLeft', false)">←</button>
+              <button class="dpad-btn" data-skey="ArrowDown" onpointerdown="setShowcaseKey('ArrowDown', true)" onpointerup="setShowcaseKey('ArrowDown', false)" onpointerleave="setShowcaseKey('ArrowDown', false)" onpointercancel="setShowcaseKey('ArrowDown', false)">↓</button>
+              <button class="dpad-btn" data-skey="ArrowRight" onpointerdown="setShowcaseKey('ArrowRight', true)" onpointerup="setShowcaseKey('ArrowRight', false)" onpointerleave="setShowcaseKey('ArrowRight', false)" onpointercancel="setShowcaseKey('ArrowRight', false)">→</button>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="touch-btn" id="showcaseBtnQ" data-skey="KeyQ" onpointerdown="setShowcaseKey('KeyQ', true)" onpointerup="setShowcaseKey('KeyQ', false)" onpointerleave="setShowcaseKey('KeyQ', false)" onpointercancel="setShowcaseKey('KeyQ', false)">Q: Boost</button>
+              <button class="touch-btn" id="showcaseBtnE" data-skey="KeyE" onpointerdown="setShowcaseKey('KeyE', true)" onpointerup="setShowcaseKey('KeyE', false)" onpointerleave="setShowcaseKey('KeyE', false)" onpointercancel="setShowcaseKey('KeyE', false)">E: Shield</button>
+              <button class="touch-btn action-btn" data-skey="Space" onpointerdown="setShowcaseKey('Space', true)" onpointerup="setShowcaseKey('Space', false)" onpointerleave="setShowcaseKey('Space', false)" onpointercancel="setShowcaseKey('Space', false)">Space / Select</button>
+            </div>
+          </div>
+
+          <div class="hint-banner" id="showcaseControlsHelp">
+            <strong>Mini Chess Controls:</strong> Click squares to select &amp; move, or use <code>Arrow Keys</code> + <code>Space</code>. Click <strong>Randomize 360 Rank</strong> for a fresh Chess360 back rank.
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-header">
+            <span>Showcase Creator Notes</span>
+            <span class="topic-tag" id="showcaseCreatorTag">Mr Boswell</span>
+          </div>
+          <div id="showcaseInfoBody" style="font-size:0.88rem; color:var(--text-muted); display:flex; flex-direction:column; gap:10px;">
+            <p><strong style="color:var(--text-main);">Creator:</strong> Mr Boswell (TBA Coding Club)</p>
+            <p><strong style="color:var(--text-main);">Mechanics:</strong> Compact 6×6 board with Chess360 randomized back-rank setup, move counter, and instant board palette toggle.</p>
+          </div>
+          <div class="code-block" id="showcaseCodeSnippet"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    TBA Coding Club • With Mr Boswell
+  </footer>
+
+<script src="js/core/utils.js"></script>
+<script src="js/core/theme.js"></script>
+<script src="js/core/a11y.js"></script>
+<script src="js/core/router.js"></script>
+<script src="js/tools/registry.js"></script>
+<script src="js/tools/grid.js"></script>
+<script src="js/tools/inspector.js"></script>
+<script src="js/tools/movement.js"></script>
+<script src="js/tools/collision.js"></script>
+<script src="js/tools/gravity.js"></script>
+<script src="js/tools/patrol.js"></script>
+<script src="js/tools/aiming.js"></script>
+<script src="js/games/data/full-scripts.js"></script>
+<script src="js/games/data/live-snippets.js"></script>
+<script src="js/games/lab.js"></script>
+<script src="js/games/pong.js"></script>
+<script src="js/games/snake.js"></script>
+<script src="js/games/tetris.js"></script>
+<script src="js/games/invaders.js"></script>
+<script src="js/games/breakout.js"></script>
+<script src="js/games/flappy.js"></script>
+<script src="js/games/maze.js"></script>
+<script src="js/games/asteroids.js"></script>
+<script src="js/home/mini-previews.js"></script>
+<script src="js/showcase/showcase.js"></script>
+<script src="js/showcase/minichess.js"></script>
+<script src="js/showcase/neonjump.js"></script>
+<script src="js/core/input.js"></script>
+<script src="js/core/main-loop.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

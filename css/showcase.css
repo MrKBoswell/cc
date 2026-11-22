@@ -1,0 +1,54 @@
+/* ==================== STUDENT SHOWCASE (YOUR GAMES) ==================== */
+.showcase-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.showcase-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background-color 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow);
+}
+
+.showcase-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-cyan);
+  background: var(--bg-card-hover);
+}
+
+.showcase-card.active {
+  border-color: var(--accent-cyan);
+  background: rgba(45, 212, 191, 0.1);
+}
+
+.showcase-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.showcase-stage-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .showcase-stage-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
